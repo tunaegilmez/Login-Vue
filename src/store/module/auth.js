@@ -1,5 +1,3 @@
-// import { AES, CryptoJS } from "vue-cryptojs";
-
 const state = {
   user: null,
   isAuth: false,

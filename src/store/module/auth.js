@@ -1,3 +1,5 @@
+// import { AES, CryptoJS } from "vue-cryptojs";
+
 const state = {
   user: null,
   isAuth: false,
@@ -17,7 +19,9 @@ const mutations = {
 };
 const actions = {
   login: ({ commit }, user) => {
-    if (user.username === "tuna" && user.password === "tuna123") {
+    const decodedPass = atob(user.password);
+
+    if (user.username === "tuna" && decodedPass === "tuna123") {
       commit("USER_LOGIN", user);
     } else {
       console.log("Login Error!!!");

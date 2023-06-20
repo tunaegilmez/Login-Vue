@@ -38,7 +38,7 @@
           </router-link>
         </div>
       </form>
-      <Toast v-if="loadingError">Username or password is wrong</Toast>
+      <!-- <Toast v-if="loadingError">Username or password is wrong</Toast> -->
     </div>
   </div>
 </template>
@@ -46,19 +46,19 @@
 <script>
 import { mapActions, mapState } from "vuex";
 
-import Toast from "@/shared/TheToast.vue";
+// import Toast from "@/shared/TheToast.vue";
 
 export default {
   data() {
     return {
       username: "",
       password: "",
-      loginError: false,
-      inputRequired: false,
+      encodedPass: "",
+      // loginError: false,
     };
   },
   components: {
-    Toast,
+    // Toast,
   },
   computed: {
     ...mapState("auth", ["isAuth"]),
@@ -66,9 +66,11 @@ export default {
   methods: {
     ...mapActions("auth", ["login"]),
     handleLogin() {
+      this.encodedPass = btoa(this.password);
+
       this.login({
         username: this.username,
-        password: this.password,
+        password: this.encodedPass,
       });
     },
   },

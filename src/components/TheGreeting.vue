@@ -21,6 +21,7 @@
         </button>
       </router-link>
     </div>
+    {{ test }}
   </div>
 </template>
 
@@ -28,7 +29,11 @@
 import { mapActions } from "vuex";
 
 export default {
-  computed: {},
+  computed: {
+    test() {
+      return JSON.parse(localStorage.getItem("auth"));
+    },
+  },
   methods: {
     ...mapActions("auth", ["logout"]),
     handleLogout() {

@@ -74,5 +74,10 @@ export default {
       });
     },
   },
+  mounted() {
+    if (this.isAuth) {
+      this.$router.push("/greeting");
+    }
+  },
 };
 </script>

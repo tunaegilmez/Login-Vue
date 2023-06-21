@@ -4,6 +4,7 @@ const state = {
 };
 const getters = {
   getUser: state => state.user,
+  isAuthUser: state => state.isAuth,
 };
 const mutations = {
   USER_LOGIN: (state, user) => {
@@ -22,7 +23,8 @@ const actions = {
     if (user.username === "tuna" && decodedPass === "tuna123") {
       commit("USER_LOGIN", user);
     } else {
-      console.log("Login Error!!!");
+      console.log("Vuex login Error!");
+      commit("USER_LOGOUT");
     }
   },
   logout: ({ commit }) => {

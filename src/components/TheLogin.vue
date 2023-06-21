@@ -38,15 +38,16 @@
           </router-link>
         </div>
       </form>
-      <!-- <Toast v-if="loadingError">Username or password is wrong</Toast> -->
+      <Toast v-if="loginToast">No user available</Toast>
+      <Toast v-if="toast">Required values: username, password</Toast>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
-// import Toast from "@/shared/TheToast.vue";
+import Toast from "@/shared/TheToast.vue";
 
 export default {
   data() {
@@ -54,24 +55,43 @@ export default {
       username: "",
       password: "",
       encodedPass: "",
-      // loginError: false,
+      toast: false,
+      loginToast: false,
     };
   },
   components: {
-    // Toast,
+    Toast,
   },
   computed: {
     ...mapState("auth", ["isAuth"]),
+    ...mapGetters("auth", ["isAuthUser"]),
   },
   methods: {
     ...mapActions("auth", ["login"]),
-    handleLogin() {
-      this.encodedPass = btoa(this.password);
 
-      this.login({
-        username: this.username,
-        password: this.encodedPass,
-      });
+    handleLogin() {
+      if (this.username === "" || this.password === "") {
+        this.toast = true;
+        setTimeout(() => {
+          this.toast = false;
+        }, 2500);
+      }
+      // else if (this.isAuthUser) {
+      //   console.log("Burdayım--", !this.isAuthUser);
+      //   this.loginToast = true;
+      //   setTimeout(() => {
+      //     this.loginToast = false;
+      //   }, 2500);
+      // }
+      else {
+        console.log("Burda Değilim");
+        this.encodedPass = btoa(this.password);
+
+        this.login({
+          username: this.username,
+          password: this.encodedPass,
+        });
+      }
     },
   },
   mounted() {
